@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <span>{{name}}}</span>
+        <span>{{name}}}</span>
+    </div>
+    <script>
+        let data = {
+            name: '张三',
+            msg: '帅气的面庞'
+        }
+        Object.keys(data).forEach(key=>{
+            let value = data[key]
+            Object.defineProperty(data,key,{
+                get() {
+                    console.log('访问数据');
+                    return value
+                },
+                set(newValue) {
+                    console.log('数据更新');
+                    value = newValue 
+                }
+            })
+        })
+        class Dep {
+            constructor() {
+                this.subs = []
+            }
+            addSub(w1) {
+                this.subs.push(w1)
+            }
+            notify() {
+                this.subs.forEach(item=>item.update())
+            }
+        }
+        class Watcher {
+            constructor(name) {
+                this.name = name
+            }
+            update() {
+                console.log('更新了');
+            }
+        }
+        const dep = new Dep()
+        const w = new Watcher()
+    </script>
+</body>
+</html>
